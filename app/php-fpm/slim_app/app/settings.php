@@ -22,8 +22,8 @@ return function (ContainerBuilder $containerBuilder) {
                     'level' => Logger::DEBUG,
                 ],
                 'redis' => [
-                    'host' => 'redis',
-                    'port' => 6379,
+                    'host' => $_ENV['REDIS_HOST'],
+                    'port' => (int) $_ENV['REDIS_PORT'],
                 ],
             ]);
         }
