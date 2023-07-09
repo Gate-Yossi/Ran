@@ -24,4 +24,15 @@ return function (App $app) {
         $group->get('', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
     });
+
+    $app->get('/testredis', function (Request $request, Response $response) {
+        $key = 'key_dummy';
+        $redis = $this->get(Redis::class);
+        if (!$redis->exists($key)) {
+            $redis->set($key, mt_rand(), ['ex'=>10]);
+        }
+        $value = $redis->get($key);
+        $response->getBody()->write($value);
+        return $response;
+    });
 };

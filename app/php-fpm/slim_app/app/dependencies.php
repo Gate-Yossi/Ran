@@ -26,5 +26,14 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
+        Redis::class => function (ContainerInterface $c) {
+            $settings = $c->get(SettingsInterface::class);
+
+            $redisSettings = $settings->get('redis');
+
+            $redis = new Redis();
+            $redis->connect($redisSettings['host'], $redisSettings['port']);
+            return $redis;
+        },
     ]);
 };
