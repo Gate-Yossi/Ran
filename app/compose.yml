@@ -27,5 +27,13 @@ services:
     volumes:
       - ./php-fpm/slim_app:/app
 
+  redis:
+    build: ./redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - net
+
 networks:
   net:
