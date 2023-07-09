@@ -17,8 +17,8 @@ build:
 # composer install
 .PHONY: composer_install
 composer_install:
-	cd $(WOKR_DIR)/php-fpm/slim_app \
-	&& composer install
+	cd $(WOKR_DIR) \
+	&& docker compose run -it --rm composer-cmd install
 
 # アプリの起動
 .PHONY: up
