@@ -38,6 +38,12 @@ ps:
 	cd $(WOKR_DIR) \
 	&& docker compose ps
 
+# MariaDBにログイン
+.PHONY: loginMariadb
+loginMariadb:
+	cd $(WOKR_DIR) \
+	&& docker compose exec mariadb bash
+
 # help
 .PHONY: help
 help:
