@@ -39,6 +39,15 @@ make build
 make down
 ```
 
+### MariaDBへのログイン
+
+MariaDBへのログイン
+
+```bash
+make loginMariadb
+```
+
+
 ### ヘルプ
 
 ```bash
