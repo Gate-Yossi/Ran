@@ -26,6 +26,8 @@ services:
     image: composer:2.5.8
     volumes:
       - ./php-fpm/slim_app:/app
+    profiles:
+      - tools
 
   redis:
     build: ./redis
@@ -47,6 +49,16 @@ services:
       - 3306:3306
     networks:
       - net
+
+  migrate-cmd:
+    image: migrate/migrate:v4.16.2
+    container_name: migrate-cmd
+    volumes:
+      - ./migrate/sql:/migrations
+    networks:
+      - net
+    profiles:
+      - tools
 
 networks:
   net:
