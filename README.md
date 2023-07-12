@@ -47,6 +47,12 @@ MariaDBへのログイン
 make loginMariadb
 ```
 
+### Redis Commanderへのログイン
+
+下記のURLにアクセス
+
+http://localhost:8081/
+
 
 ### ヘルプ
 
