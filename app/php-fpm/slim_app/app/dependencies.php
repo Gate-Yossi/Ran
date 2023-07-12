@@ -35,5 +35,28 @@ return function (ContainerBuilder $containerBuilder) {
             $redis->connect($redisSettings['host'], $redisSettings['port']);
             return $redis;
         },
+        PDO::class => function (ContainerInterface $c) {
+            $settings = $c->get(SettingsInterface::class);
+
+            $mariadbSettings = $settings->get('mariadb');
+
+            //PDO設定
+            $host    = $mariadbSettings['host'];
+            $port    = $mariadbSettings['port'];
+            $dbname  = $mariadbSettings['dbname'];
+            $charset = $mariadbSettings['charset'];
+            $user    = $mariadbSettings['user'];
+            $pass    = $mariadbSettings['pass'];
+            $option = array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => true,
+                PDO::ATTR_STRINGIFY_FETCHES => false,
+            );
+            $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s;', $host, $port, $dbname, $charset);
+
+            $pdo = new \PDO($dsn, $user, $pass, $option);
+            return $pdo;
+        },
     ]);
 };

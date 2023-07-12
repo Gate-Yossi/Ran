@@ -35,4 +35,12 @@ return function (App $app) {
         $response->getBody()->write($value);
         return $response;
     });
+    $app->get('/testmariadb', function (Request $request, Response $response) {
+        $pdo = $this->get(PDO::class);
+        $stmt = $pdo->query('SELECT * from `sample`');
+        $data = $stmt->fetchAll();
+        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $response->getBody()->write($json);
+        return $response;
+    });
 };
