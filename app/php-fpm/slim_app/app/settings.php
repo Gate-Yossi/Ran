@@ -25,6 +25,14 @@ return function (ContainerBuilder $containerBuilder) {
                     'host' => $_ENV['REDIS_HOST'],
                     'port' => (int) $_ENV['REDIS_PORT'],
                 ],
+                'mariadb' => [
+                    'host'    => $_ENV['MARIADB_HOST'],
+                    'port'    => $_ENV['MARIADB_PORT'],
+                    'dbname'  => $_ENV['MARIADB_DBNAME'],
+                    'charset' => $_ENV['MARIADB_CHARSET'],
+                    'user'    => $_ENV['MARIADB_USER'],
+                    'pass'    => $_ENV['MARIADB_PASS'],
+                ],
             ]);
         }
     ]);
