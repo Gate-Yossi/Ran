@@ -2,6 +2,21 @@ version: '3.8'
 
 services:
 
+  https-portalk:
+    build: ./https-portal
+    container_name: https-portal
+    volumes:
+        - ./https-portal/ssl_certs:/var/lib/https-portal
+    environment:
+      DOMAINS: 'localhost -> http://host.docker.internal:8080'
+      STAGE: local
+      # FORCE_RENEW: 'true'
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - net
+
   nginx:
     build: ./nginx
     container_name: nginx
