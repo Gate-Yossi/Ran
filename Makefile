@@ -38,9 +38,15 @@ ps:
 	cd $(WOKR_DIR) \
 	&& docker compose ps
 
+# コンテナの削除
+.PHONY: clean
+clean:
+	cd $(WOKR_DIR) \
+	&& docker-compose down --rmi all --volumes --remove-orphans
+
 # MariaDBにログイン
-.PHONY: loginMariadb
-loginMariadb:
+.PHONY: login_mariadb
+login_mariadb:
 	cd $(WOKR_DIR) \
 	&& docker compose exec mariadb bash
 

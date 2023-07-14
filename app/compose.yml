@@ -34,6 +34,8 @@ services:
     container_name: php-fpm
     volumes:
       - ./php-fpm/slim_app:/var/www/slim_app
+      - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./php-fpm/xdebug:/tmp/xdebug
     networks:
       - net
 
@@ -84,6 +86,17 @@ services:
       - net
     profiles:
       - tools
+
+  webgrind:
+    image: jokkedk/webgrind:latest
+    container_name: webgrind
+    volumes:
+      - ./php-fpm/slim_app:/host/var/www/slim_app
+      - ./php-fpm/xdebug:/tmp
+    ports:
+      - 8082:80
+    networks:
+      - net
 
 networks:
   net:
