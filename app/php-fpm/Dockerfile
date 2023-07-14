@@ -8,6 +8,9 @@ RUN pecl install redis \
 
 RUN docker-php-ext-install pdo_mysql
 
+RUN pecl install xdebug \
+ && docker-php-ext-enable xdebug
+
 WORKDIR /var/www
 CMD php-fpm
 RUN chown www-data:www-data /var/www/
