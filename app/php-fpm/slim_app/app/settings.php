@@ -33,6 +33,14 @@ return function (ContainerBuilder $containerBuilder) {
                     'user'    => $_ENV['MARIADB_USER'],
                     'pass'    => $_ENV['MARIADB_PASS'],
                 ],
+                'mariadb_read' => [
+                    'host'    => $_ENV['MARIADB_READ_HOST'],
+                    'port'    => $_ENV['MARIADB_READ_PORT'],
+                    'dbname'  => $_ENV['MARIADB_READ_DBNAME'],
+                    'charset' => $_ENV['MARIADB_READ_CHARSET'],
+                    'user'    => $_ENV['MARIADB_READ_USER'],
+                    'pass'    => $_ENV['MARIADB_READ_PASS'],
+                ],
             ]);
         }
     ]);
