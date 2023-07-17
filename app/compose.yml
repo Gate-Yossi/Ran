@@ -69,11 +69,28 @@ services:
     container_name: mariadb
     restart: unless-stopped
     volumes:
+      - "./mariadb/conf.d:/etc/mysql/conf.d"
       - "./mariadb/initdb.d:/docker-entrypoint-initdb.d"
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     ports:
       - 3306:3306
+    networks:
+      - net
+
+  mariadb_read:
+    build: ./mariadb_read
+    container_name: mariadb_read
+    restart: unless-stopped
+    volumes:
+      - "./mariadb_read/conf.d:/etc/mysql/conf.d"
+      - "./mariadb_read/initdb.d:/docker-entrypoint-initdb.d"
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+    ports:
+      - 3307:3306
+    depends_on:
+      - mariadb
     networks:
       - net
 
