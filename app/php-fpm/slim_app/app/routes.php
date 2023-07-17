@@ -43,4 +43,12 @@ return function (App $app) {
         $response->getBody()->write($json);
         return $response;
     });
+    $app->get('/testmariadb_read', function (Request $request, Response $response) {
+        $pdo = $this->get('db_read');
+        $stmt = $pdo->query('SELECT * from `sample`');
+        $data = $stmt->fetchAll();
+        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $response->getBody()->write($json);
+        return $response;
+    });
 };
