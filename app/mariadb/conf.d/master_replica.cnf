@@ -4,3 +4,5 @@ log-bin
 server-id=1
 log-basename=master1
 binlog-format=mixed
+
+general_log

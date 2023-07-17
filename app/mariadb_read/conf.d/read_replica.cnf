@@ -3,3 +3,6 @@
 log-bin
 server-id=2
 log-basename=read2
+
+general_log
+log_disabled_statements='slave,sp'

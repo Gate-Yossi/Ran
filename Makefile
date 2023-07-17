@@ -50,6 +50,12 @@ login_mariadb:
 	cd $(WOKR_DIR) \
 	&& docker compose exec mariadb bash
 
+# MariaDB(READ)にログイン
+.PHONY: login_mariadb
+login_mariadb_read:
+	cd $(WOKR_DIR) \
+	&& docker compose exec mariadb_read bash
+
 # migrate create ex) SQL_NAME=xxx make migrate_create
 .PHONY: migrate_create
 migrate_create:
