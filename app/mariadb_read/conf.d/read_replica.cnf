@@ -1,0 +1,5 @@
+
+[mysqld]
+log-bin
+server-id=2
+log-basename=read2
