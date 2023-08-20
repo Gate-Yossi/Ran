@@ -44,7 +44,7 @@ make down
 MariaDBへのログイン
 
 ```bash
-make loginMariadb
+make login_mariadb
 ```
 
 ### Redis Commanderへのログイン

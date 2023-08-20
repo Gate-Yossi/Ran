@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
+use SlopeIt\ClockMock\ClockMock;
 
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
@@ -47,6 +48,24 @@ return function (App $app) {
         $pdo = $this->get('db_read');
         $stmt = $pdo->query('SELECT * from `sample`');
         $data = $stmt->fetchAll();
+        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $response->getBody()->write($json);
+        return $response;
+    });
+    $app->get('/testtime', function (Request $request, Response $response) {
+        $data = [];
+
+        $now = new Datetime();
+        $data['01'] = $now->format('Y-m-d H:i:s.u');
+
+        ClockMock::freeze(new \DateTime('2000-01-01 12:00:00'));
+        $now = new Datetime();
+        $data['02'] = $now->format('Y-m-d H:i:s.u');
+
+        ClockMock::reset();
+        $now = new Datetime();
+        $data['03'] = $now->format('Y-m-d H:i:s.u');
+
         $json = json_encode($data, JSON_PRETTY_PRINT);
         $response->getBody()->write($json);
         return $response;
