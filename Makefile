@@ -90,6 +90,29 @@ migrate_force:
 	&& . .env \
 	&& docker compose run -it --rm migrate-cmd -path /migrations -database "$${MIGRATE_DNS}" force 1
 
+# PHP-FPMにログイン
+.PHONY: login_php_fpm
+login_php_fpm:
+	cd $(WOKR_DIR) \
+	&& docker compose exec php-fpm bash
+
+# nginx
+.PHONY: login_nginx
+login_nginx:
+	cd $(WOKR_DIR) \
+	&& docker compose exec nginx sh
+
+# log
+.PHONY: logs
+logs:
+	cd $(WOKR_DIR) \
+	&& docker compose logs
+
+# localhostへのリクエスト
+.PHONY: test_req
+test_req:
+	curl -k https://localhost
+
 # help
 .PHONY: help
 help:
