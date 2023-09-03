@@ -6,6 +6,7 @@ use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use SlopeIt\ClockMock\ClockMock;
@@ -17,6 +18,8 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
+        $logger = $this->get(LoggerInterface::class);
+        $logger->debug('Hello world!');
         $response->getBody()->write('Hello world!');
         return $response;
     });
