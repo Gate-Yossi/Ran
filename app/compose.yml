@@ -118,6 +118,20 @@ services:
     networks:
       - net
 
+  k6-cmd:
+    build: ./k6
+    container_name: k6
+    platform: linux/x86_64
+    ports:
+      - "6565:6565"
+    working_dir: /work
+    volumes:
+      - ./k6/work:/work
+    networks:
+      - net
+    profiles:
+      - tools
+
 networks:
   net:
 
