@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Processor\IntrospectionProcessor;
+use Monolog\Processor\MemoryPeakUsageProcessor;
+use Monolog\Processor\MemoryUsageProcessor;
+use Monolog\Processor\ProcessIdProcessor;
 use Monolog\Processor\UidProcessor;
+use Monolog\Processor\WebProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -18,11 +24,19 @@ return function (ContainerBuilder $containerBuilder) {
             $loggerSettings = $settings->get('logger');
             $logger = new Logger($loggerSettings['name']);
 
-            $processor = new UidProcessor();
-            $logger->pushProcessor($processor);
+            $logger->pushProcessor(new UidProcessor());
+            $logger->pushProcessor(new WebProcessor());
+            $logger->pushProcessor(new ProcessIdProcessor());
+            $logger->pushProcessor(new IntrospectionProcessor());
+            $logger->pushProcessor(new MemoryPeakUsageProcessor());
+            $logger->pushProcessor(new MemoryUsageProcessor());
 
             $handler = new StreamHandler($loggerSettings['path'], $loggerSettings['level']);
             $logger->pushHandler($handler);
+
+            $format = "%datetime%\t%extra.uid%\t%level_name%\t%extra.http_method%\t%extra.server%%extra.url%\t%extra.process_id%\t%extra.class%%extra.callType%%extra.function%(%extra.line%)\t%message%\t%context%\t%extra%" . PHP_EOL;
+            $formatter = new LineFormatter($format);
+            $handler->setFormatter($formatter);
 
             return $logger;
         },
