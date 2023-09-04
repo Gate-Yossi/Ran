@@ -1,17 +1,21 @@
 import http from 'k6/http';
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+import { check } from 'k6';
 
 export const options = {
   stages: [
-    { target:  5, duration: '30s' },
-    { target: 15, duration: '30s' },
-    { target:  5, duration: '30s' },
+    { target:  5, duration: '30s' }
   ],
 };
 
 export default function () {
-  http.get('http://host.docker.internal:8080/');
+  const res = http.get('http://host.docker.internal:8080/');
+  check(res, {
+    'is status 200'        : (r) => r.status === 200,
+    'verify homepage text' : (r) => r.body.includes('Hello world!'),
+    'body size is 12'      : (r) => r.body.length == 12,
+  });
 };
 
 export function handleSummary(data) {
